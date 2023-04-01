@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=Player
+comment1.params=
+comment1.target=void\ act()
+comment2.params=
+comment2.target=void\ killingGhost()
+comment3.params=
+comment3.target=void\ protect()
+comment4.params=offset\ length
+comment4.target=int\ adjustOffset(int,\ int)
+comment5.params=speed\ length\ s
+comment5.target=void\ move(int,\ int,\ java.lang.String)
+comment6.params=direction\ speed
+comment6.target=int\ getChangeX(int,\ int)
+comment7.params=direction\ speed
+comment7.target=int\ getChangeY(int,\ int)
+numComments=8

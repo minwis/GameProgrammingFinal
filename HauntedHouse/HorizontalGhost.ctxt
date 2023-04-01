@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=HorizontalGhost
+comment1.params=
+comment1.target=void\ act()
+comment2.params=offset\ length
+comment2.target=int\ adjustOffset(int,\ int)
+comment3.params=speed\ length\ s
+comment3.target=void\ move(int,\ int,\ java.lang.String)
+comment4.params=direction\ speed
+comment4.target=int\ getChangeX(int,\ int)
+comment5.params=direction\ speed
+comment5.target=int\ getChangeY(int,\ int)
+numComments=6
