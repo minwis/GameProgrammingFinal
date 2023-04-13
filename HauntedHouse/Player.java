@@ -61,55 +61,47 @@ public class Player extends Actor
            }
         
            if ( stage1 ) {
+               if (isTouching(Exit.class)) {
+                   removeTouching(Exit.class);
+                   stage1=  false;
+                   protection = false;
+                   killGhost = false;
+                   bulldozer = false;
+                   world.print("Moving to the next stage...");
+                   world.getScoreboard().lives = 10;
+                   world.makeNewWorld();
+                   Greenfoot.stop();
+                   return;
+               }
+               
                if (isTouching(HealingPotion.class)) {
-                       world.getScoreboard().increaseLive();
-                       removeTouching(HealingPotion.class);
+                   world.getScoreboard().increaseLive();
+                   removeTouching(HealingPotion.class);
                }
             
                if (isTouching(ProtectionAmulet.class)) {
-                  removeTouching(ProtectionAmulet.class);
+                   removeTouching(ProtectionAmulet.class);
                    protect();
                }
              
-               if (isTouching(KillerAmulet.class) ) {
-                   if (isTouching(Exit.class)) {
-                       removeTouching(Exit.class);
-                       stage1=  false;
-                       world.print("Moving to the next stage...");
-                       world.getScoreboard().lives = 10;
-                       world.makeNewWorld();
-                       Greenfoot.stop();
-                   }
+               if (isTouching(BulldozerAmulet.class)) {
+                    removeTouching(BulldozerAmulet.class);
+                    setImage(bulldozerPlayer);
+                    bulldozer = true;
+                    speed = 6;
+                
+                    Timer timer = new Timer();
+                    TimerTask task = new resetAmulet();
+                    timer.schedule(task, 25000);
+               }
                
-                   if (isTouching(HealingPotion.class)) {
-                       world.getScoreboard().increaseLive();
-                       removeTouching(HealingPotion.class);
-                   }
-             
-                   if (isTouching(ProtectionAmulet.class)) {
-                       removeTouching(ProtectionAmulet.class);
-                       protect();
-                   }
-             
-                   if (isTouching(KillerAmulet.class) ) {
+               if (isTouching(KillerAmulet.class) ) {
                        removeTouching(KillerAmulet.class);
                        killGhost = true;
                        setImage(killerPlayer);
                        Timer timer = new Timer();
                        TimerTask task = new resetAmulet();
                        timer.schedule(task, 25000);
-                    }
-            
-                   if (isTouching(BulldozerAmulet.class)) {
-                       removeTouching(BulldozerAmulet.class);
-                       setImage(bulldozerPlayer);
-                       bulldozer = true;
-                       speed = 6;
-                
-                       Timer timer = new Timer();
-                       TimerTask task = new resetAmulet();
-                       timer.schedule(task, 25000);
-                   }
                }
                
                shootingCounter--;

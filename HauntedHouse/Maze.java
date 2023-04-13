@@ -9,12 +9,11 @@ public class Maze extends World
         public Maze()
         {
         super(670, 720, 1); /*(23 * 30)^2, 23 is the number of the blocks
-        the maze has, 30 is the number of pixels each block has.
-        */
+        the maze has, 30 is the number of pixels each block has.*/
         
         sb = new Scoreboard();
         addObject(sb, getWidth()/2,695);
-        
+        Player.stage1 = true;
         String[][] arr = new Maze_blueprint().return_blueprint();
         for (int i = 0; i < arr.length; i++ ) {
             for (int j = 0; j < arr[0].length; j++ ) {
@@ -50,12 +49,12 @@ public class Maze extends World
         
         }
         
-        /*if (print_story) {
+        if (print_story) {
             System.out.print("You are the ghost hunter..." + "\n" + 
             "But you are stuck in the haunted house!" + "\n" + "Escape the maze" + "\n"
             + "And fight against the ghost boss!"+ "\n" + "Now, press the 'Run' button to start!");
             print_story = false;
-        }*/
+        }
     }
     
     public void print(String message) {
@@ -79,6 +78,7 @@ public class Maze extends World
         Timer timer = new Timer();
         TimerTask task = new wait();
         timer.schedule(task, 300);
+        return;
     }
     
     private class wait extends TimerTask {

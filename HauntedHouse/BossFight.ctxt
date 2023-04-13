@@ -2,4 +2,8 @@
 comment0.target=BossFight
 comment1.params=
 comment1.target=BossFight()
-numComments=2
+comment2.params=
+comment2.target=Scoreboard\ getScoreboard()
+comment3.params=message
+comment3.target=void\ print(java.lang.String)
+numComments=4

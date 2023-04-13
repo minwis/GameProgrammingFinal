@@ -11,7 +11,7 @@ public class Fireball extends Actor
     public void act()
     {
         setRotation(recentRotation);
-        move(2);
+        move(3);
         
         if ( getY() <= 0 || getX() <= 0) {
             getWorld().removeObject(this);
@@ -20,12 +20,6 @@ public class Fireball extends Actor
         else if (getY() >= 719 || getX() >= 669) {
             getWorld().removeObject(this);
             return;
-        }
-        
-        if (isTouching(Player.class)) {
-            BossFight World = (BossFight)getWorld();
-            removeTouching(Player.class);
-            getWorld().removeObject(this);
         }
         
     }
