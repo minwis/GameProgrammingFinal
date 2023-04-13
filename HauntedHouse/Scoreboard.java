@@ -19,6 +19,7 @@ public class Scoreboard extends Actor
             setImage(boardImage);
         }
         else {
+            //lives = 10;
             myWorld2 = (BossFight) w;
             width = myWorld2.getWidth();
             boardImage = new GreenfootImage(width, height);
@@ -38,14 +39,12 @@ public class Scoreboard extends Actor
                 world.getScoreboard().drawLives();
                 Greenfoot.stop();
                 world.print("YOU LOST!");
-                lives = 5;
             }
             else {
                 BossFight world = (BossFight)getWorld();
                 world.getScoreboard().drawLives();
                 Greenfoot.stop();
                 world.print("YOU LOST!");
-                lives = 10;
             }
             
         }

@@ -9,15 +9,14 @@ public class BossFight extends World
     {    
         super(670, 720, 1);
         sb = new Scoreboard();
+        sb.lives = 10;
+        addObject(sb, getWidth()/2,695);
         if ( printInstruction ) {
             printInstruction = false;
-            System.out.println("\n" + "It is the last round! Kill the boss and win the game!" + "\n" +
+            System.out.println("\n" + "It is the last stage! Kill the boss and win the game!" + "\n" +
             "Press X key to shoot the bullets, the bullets will be fired to the direction of your mouse!");
         }
         addObject(new Boss(), 335, 360);
-        if (getObjects(Player.class).size() < 1) {
-            addObject(new Player(), 335, 600);
-        }
     }
     
     public Scoreboard getScoreboard() {

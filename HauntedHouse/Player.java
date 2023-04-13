@@ -81,7 +81,7 @@ public class Player extends Actor
             
                if (isTouching(ProtectionAmulet.class)) {
                    removeTouching(ProtectionAmulet.class);
-                   protect();
+                   protect(25000);
                }
              
                if (isTouching(BulldozerAmulet.class)) {
@@ -109,7 +109,18 @@ public class Player extends Actor
            }
            
         }
+        else {
+            BossFight world = (BossFight) getWorld();
+            if (isTouching(Fireball.class)) {
+                if (!protection) {
+                    world.getScoreboard().decreaseLive();
+                }
+                removeTouching(Fireball.class);
+                protect(2500);
+            }
+        }
     }
+    
     public void killingGhost() {
         if (recentRotation == 270) {
             getWorld().addObject(new Laser2(recentRotation), getX(), getY() - 30);
@@ -125,13 +136,15 @@ public class Player extends Actor
         }
     }
     
-    public void protect() {
-        setImage(protectedPlayer);
+    public void protect(int delay) {
+        if (stage1) {
+            setImage(protectedPlayer);
+        }
         protection = true;
         
         Timer timer = new Timer();
         TimerTask task = new resetAmulet();
-        timer.schedule(task, 25000);
+        timer.schedule(task, delay);//delay
     }
     
     private class resetAmulet extends TimerTask {
