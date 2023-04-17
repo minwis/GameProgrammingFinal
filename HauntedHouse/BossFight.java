@@ -8,6 +8,7 @@ public class BossFight extends World
     public BossFight()
     {    
         super(670, 720, 1);
+        Player.stage1 = false;
         sb = new Scoreboard();
         sb.lives = 10;
         addObject(sb, getWidth()/2,695);

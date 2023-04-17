@@ -10,24 +10,19 @@ public class Scoreboard extends Actor
     GreenfootImage boardImage;
     public int lives = 5;
     public void addedToWorld(World w) {
-        if (Player.stage1) {
+        try {
             myWorld1 = (Maze) w;
             width = myWorld1.getWidth();
-            boardImage = new GreenfootImage(width, height);
-            boardImage.setColor(Color.BLACK);
-            boardImage.fillRect(0,0,width,height);
-            setImage(boardImage);
         }
-        else {
+        catch(ClassCastException e) {
             //lives = 10;
             myWorld2 = (BossFight) w;
             width = myWorld2.getWidth();
-            boardImage = new GreenfootImage(width, height);
-            boardImage.setColor(Color.BLACK);
-            boardImage.fillRect(0,0,width,height);
-            setImage(boardImage);
         }
-        
+        boardImage = new GreenfootImage(width, height);
+        boardImage.setColor(Color.BLACK);
+        boardImage.fillRect(0,0,width,height);
+        setImage(boardImage);
     }
     
     public void act() {

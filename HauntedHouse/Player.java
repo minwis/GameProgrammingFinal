@@ -52,16 +52,6 @@ public class Player extends Actor
            }
         
            if (isTouching(Exit.class)) {
-               removeTouching(Exit.class);
-               stage1=  false;
-               world.print("Moving to the next stage...");
-               world.getScoreboard().lives = 10;
-               world.makeNewWorld();
-               Greenfoot.stop();
-           }
-        
-           if ( stage1 ) {
-               if (isTouching(Exit.class)) {
                    removeTouching(Exit.class);
                    stage1=  false;
                    protection = false;
@@ -74,51 +64,69 @@ public class Player extends Actor
                    return;
                }
                
-               if (isTouching(HealingPotion.class)) {
-                   world.getScoreboard().increaseLive();
-                   removeTouching(HealingPotion.class);
-               }
+            if (isTouching(HealingPotion.class)) {
+                world.getScoreboard().increaseLive();
+                removeTouching(HealingPotion.class);
+            }
             
-               if (isTouching(ProtectionAmulet.class)) {
-                   removeTouching(ProtectionAmulet.class);
-                   protect(25000);
-               }
+            if (isTouching(ProtectionAmulet.class)) {
+                removeTouching(ProtectionAmulet.class);
+                protect(25000);
+            }
              
-               if (isTouching(BulldozerAmulet.class)) {
-                    removeTouching(BulldozerAmulet.class);
-                    setImage(bulldozerPlayer);
-                    bulldozer = true;
-                    speed = 6;
-                
-                    Timer timer = new Timer();
-                    TimerTask task = new resetAmulet();
-                    timer.schedule(task, 25000);
-               }
+            if (isTouching(BulldozerAmulet.class)) {
+                removeTouching(BulldozerAmulet.class);
+                setImage(bulldozerPlayer);
+                bulldozer = true;
+                speed = 6;
+            
+                Timer timer = new Timer();
+                TimerTask task = new resetAmulet();
+                timer.schedule(task, 25000);
+            }
                
-               if (isTouching(KillerAmulet.class) ) {
-                       removeTouching(KillerAmulet.class);
-                       killGhost = true;
-                       setImage(killerPlayer);
-                       Timer timer = new Timer();
-                       TimerTask task = new resetAmulet();
-                       timer.schedule(task, 25000);
-               }
+            if (isTouching(KillerAmulet.class) ) {
+                removeTouching(KillerAmulet.class);
+                killGhost = true;
+                setImage(killerPlayer);
+                Timer timer = new Timer();
+                TimerTask task = new resetAmulet();
+                timer.schedule(task, 25000);
+            }
                
-               shootingCounter--;
+            
                
-           }
            
         }
         else {
             BossFight world = (BossFight) getWorld();
             if (isTouching(Fireball.class)) {
-                if (!protection) {
-                    world.getScoreboard().decreaseLive();
-                }
-                removeTouching(Fireball.class);
-                protect(2500);
+                 if (!protection) {
+                     world.getScoreboard().decreaseLive();
+                 }
+                 removeTouching(Fireball.class);
+                 protect(2500);
             }
+            
+            MouseInfo mi = Greenfoot.getMouseInfo();
+            if (mi != null) {
+                turnTowards(mi.getX(), mi.getY());
+            }
+            
+            if (Greenfoot.isKeyDown("f") && shootingCounter <= 0) {
+                 world.addObject(new Laser(mi.getX(), mi.getY()), getX(), getY());
+                 shootingCounter = 25;
+            }
+            
+            if ( world.getObjects(Boss.class).size() < 1 ) {
+                world.print("YOU WON!");
+                Greenfoot.stop();
+                return;
+            }
+            
         }
+        
+        shootingCounter--;
     }
     
     public void killingGhost() {
