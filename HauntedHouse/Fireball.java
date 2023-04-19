@@ -13,7 +13,7 @@ public class Fireball extends Actor
         setRotation(recentRotation);
         move(3);
         
-        if ( getY() <= 0 || getX() <= 0) {
+        if ( getY() <= 45 || getX() <= 0) {
             getWorld().removeObject(this);
             return;
         }

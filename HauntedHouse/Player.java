@@ -19,9 +19,14 @@ public class Player extends Actor
     
     public static boolean stage1=true;
     
+    public static int playerX;
+    public static int playerY;
+    
     public void act()
     {
     
+        playerX = getX();
+        playerY = getY();
         if (Greenfoot.isKeyDown("up")) {
             setRotation(Direction.UP);
             recentRotation = Direction.UP;
@@ -102,7 +107,7 @@ public class Player extends Actor
             BossFight world = (BossFight) getWorld();
             if (isTouching(Fireball.class)) {
                  if (!protection) {
-                     world.getScoreboard().decreaseLive();
+                     //world.getScoreboard().decreaseLive();
                  }
                  removeTouching(Fireball.class);
                  protect(2500);
@@ -114,14 +119,20 @@ public class Player extends Actor
             }
             
             if (Greenfoot.isKeyDown("f") && shootingCounter <= 0) {
-                 world.addObject(new Laser(mi.getX(), mi.getY()), getX(), getY());
-                 shootingCounter = 25;
+                Laser laser = new Laser();
+                laser.setRotation(getRotation());
+                world.addObject(laser, getX(), getY());
+                shootingCounter = 25;
             }
             
             if ( world.getObjects(Boss.class).size() < 1 ) {
                 world.print("YOU WON!");
                 Greenfoot.stop();
                 return;
+            }
+            
+            if (isTouching(Minion.class)) {
+                removeTouching(Minion.class);
             }
             
         }
@@ -152,7 +163,7 @@ public class Player extends Actor
         
         Timer timer = new Timer();
         TimerTask task = new resetAmulet();
-        timer.schedule(task, delay);//delay
+        timer.schedule(task, delay);
     }
     
     private class resetAmulet extends TimerTask {

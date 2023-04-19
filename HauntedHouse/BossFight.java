@@ -1,4 +1,4 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;
 
 public class BossFight extends World
 {
@@ -8,6 +8,7 @@ public class BossFight extends World
     public BossFight()
     {    
         super(670, 720, 1);
+        
         Player.stage1 = false;
         sb = new Scoreboard();
         sb.lives = 10;
