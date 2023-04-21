@@ -11,39 +11,39 @@ public class Boss extends Actor
     public static boolean createBossBar = true;
     public static int ghostNumber = 6;
     public static boolean newPattern = true;
-    public static boolean executingPattern = true;
     public static int pattern = -1;
-    private static int ghostN = 0;
-    private static int tick = 100;
+    private static int ghostN = 6;
+    private static int tick = 0;
     public void act()
     {
         BossFight world = (BossFight) getWorld();
         
         if ( world.getObjects(Minion.class).size() < 1) {
-            /*if there is no Minion class on the world,
-             * the new pattern has to start
-             */
             newPattern = true;
-            pattern = -1;
         }
         
         if (newPattern) {
+            System.out.println("New Pattern Generated");
             newPattern = false;
             int max = 2;
-            int min = 0; //0.5 * 3 = 1.5
+            int min = 0;
             pattern = (int)(Math.random()*(max-min+1)+min); //getting new pattern randomly. copied from internet
         }
         
         if (pattern == 0) {
-            //pattern2(world);
             pattern1(world, getX(), getY());
+            tick++;
+            if (tick > 100) {
+                newPattern = true;
+                tick = 0;
+            }
         }
         else if (pattern == 1) {
             pattern2(world);
         }
-        else if (pattern == 2) {
+        /*else if (pattern == 2) {
             pattern3();
-        }
+        }*/
         
         if (createBossBar) {
             getWorld().addObject(new BossBar(), 335, 20);
@@ -59,40 +59,32 @@ public class Boss extends Actor
             getWorld().removeObject(this);
             return;
         }
-        
     }
     
     public void pattern1(BossFight world, int X, int Y) {
-        if ( tick > 0 ) {
+        if ( tick <= 100 ) {
             world.addObject(new Fireball(rotate), X, Y);
             rotate += 10;
-            tick--;
-        }
-        else {
-            newPattern = true;
-            pattern = -1;
-        }
-    }
-
-    private static class stopPattern extends TimerTask {
-        public void run() {
-            newPattern = true;
         }
     }
     
     public void pattern2(BossFight world) {
-        if ( ghostN < 6 ) {
+        if ( ghostN <= 6 && ghostN > 0 ) {
             world.addObject(new Minion(), Greenfoot.getRandomNumber(world.getWidth()), 
             Greenfoot.getRandomNumber(world.getHeight()));
-            System.out.println(true);
-            ghostN++;
+            ghostN--;
         }
         else {
-            pattern = -1;
+            newPattern = true;
         }
     }
     
     public static void pattern3() {
+        /*
+         * 
+         */
+        
+        //newPattern = true;
         //fireballs fly horizontally or vertically in the random position.
     }
 }

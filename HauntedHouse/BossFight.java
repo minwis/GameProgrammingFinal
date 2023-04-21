@@ -19,6 +19,7 @@ public class BossFight extends World
             "Press X key to shoot the bullets, the bullets will be fired to the direction of your mouse!");
         }
         addObject(new Boss(), 335, 360);
+        addObject(new Player(), 335, 560);
     }
     
     public Scoreboard getScoreboard() {

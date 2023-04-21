@@ -107,7 +107,7 @@ public class Player extends Actor
             BossFight world = (BossFight) getWorld();
             if (isTouching(Fireball.class)) {
                  if (!protection) {
-                     //world.getScoreboard().decreaseLive();
+                     world.getScoreboard().decreaseLive();
                  }
                  removeTouching(Fireball.class);
                  protect(2500);
