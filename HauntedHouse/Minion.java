@@ -9,14 +9,6 @@ public class Minion extends Actor
         move(2);
         BossFight world = (BossFight)getWorld();
         
-        if (isTouching(Player.class)) {
-            world.getScoreboard().decreaseLive();
-        }
-        
     }
     
 }
-/*
- * pattern2 is repeating.
- * pattern is not randomly generated; only patter2 is repeating.
- */

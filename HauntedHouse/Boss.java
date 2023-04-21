@@ -10,40 +10,39 @@ public class Boss extends Actor
     public static int health = originalHealth;
     public static boolean createBossBar = true;
     public static int ghostNumber = 6;
-    public static boolean newPattern = true;
     public static int pattern = -1;
-    private static int ghostN = 6;
+    public static int previousPattern = -1;
+    private static int ghostN = 0;
     private static int tick = 0;
     public void act()
     {
         BossFight world = (BossFight) getWorld();
         
-        if ( world.getObjects(Minion.class).size() < 1) {
-            newPattern = true;
+        if (tick > 2000 && pattern == 0) {
+            pattern = -1;
+            tick = 0;
+            rotate = 0;
         }
         
-        if (newPattern) {
-            System.out.println("New Pattern Generated");
-            newPattern = false;
-            int max = 2;
-            int min = 0;
-            pattern = (int)(Math.random()*(max-min+1)+min); //getting new pattern randomly. copied from internet
+        if ( world.getObjects(Minion.class).size() < 1 && pattern == 1) {
+            pattern = -1;
+            ghostN = 0;
+        }
+        
+        if (pattern == -1) {
+            pattern = Greenfoot.getRandomNumber(3);
         }
         
         if (pattern == 0) {
             pattern1(world, getX(), getY());
             tick++;
-            if (tick > 100) {
-                newPattern = true;
-                tick = 0;
-            }
         }
         else if (pattern == 1) {
             pattern2(world);
         }
-        /*else if (pattern == 2) {
+        else if (pattern == 2) {
             pattern3();
-        }*/
+        }
         
         if (createBossBar) {
             getWorld().addObject(new BossBar(), 335, 20);
@@ -69,22 +68,17 @@ public class Boss extends Actor
     }
     
     public void pattern2(BossFight world) {
-        if ( ghostN <= 6 && ghostN > 0 ) {
+        if ( ghostN < 6 ) {
             world.addObject(new Minion(), Greenfoot.getRandomNumber(world.getWidth()), 
             Greenfoot.getRandomNumber(world.getHeight()));
-            ghostN--;
-        }
-        else {
-            newPattern = true;
+            ghostN++;
         }
     }
     
     public static void pattern3() {
         /*
-         * 
+         *fireballs fly horizontally or vertically in the random position. 
          */
-        
-        //newPattern = true;
-        //fireballs fly horizontally or vertically in the random position.
+        pattern = -1;
     }
 }

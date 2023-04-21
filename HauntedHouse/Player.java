@@ -98,9 +98,6 @@ public class Player extends Actor
                 TimerTask task = new resetAmulet();
                 timer.schedule(task, 25000);
             }
-               
-            
-               
            
         }
         else {
@@ -132,6 +129,7 @@ public class Player extends Actor
             }
             
             if (isTouching(Minion.class)) {
+                world.getScoreboard().decreaseLive();
                 removeTouching(Minion.class);
             }
             
