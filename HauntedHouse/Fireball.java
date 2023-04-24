@@ -4,8 +4,11 @@ public class Fireball extends Actor
 {
     public int recentRotation = 0;
     
-    Fireball(int recentRotation) {
+    Fireball(int recentRotation, int scaleFactor) {
         this.recentRotation = recentRotation;
+        GreenfootImage img = this.getImage();
+        img.scale(img.getWidth() * scaleFactor, img.getHeight() * scaleFactor);
+        setImage(img);
     }
     
     public void act()

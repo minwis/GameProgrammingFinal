@@ -20,6 +20,7 @@ public class Laser extends Actor
         }
         
         if (isTouching(Minion.class)) {
+            world.getScoreboard().increaseLive();
             removeTouching(Minion.class);
         }
     }
