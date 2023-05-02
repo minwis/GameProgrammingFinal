@@ -13,6 +13,8 @@ public class Boss extends Actor
     public static int pattern = -1;
     private static int ghostN = 0;
     private static int maximumTick = 400;
+    private static int previousTick = 0;
+    private static int tickDelay = 15;
     private static int tick = 0;
     private static int[] fireballPosition = new int[6];
     private static int fireballPositionCount = 0;
@@ -23,7 +25,7 @@ public class Boss extends Actor
         
         if (pattern == -1) {
             pattern = Greenfoot.getRandomNumber(3);
-            System.out.println("New pattern generated: " + pattern);
+            //System.out.println("New pattern generated: " + pattern);
         }
         
         if (pattern == 0) {
@@ -52,6 +54,11 @@ public class Boss extends Actor
         }
     }
     
+    /*
+     * rotate the center of rotation.
+     */
+    
+    
     public void pattern1(BossFight world, int X, int Y) { //does not terminate?
         if (tick == maximumTick) {
             pattern = -1;
@@ -59,10 +66,8 @@ public class Boss extends Actor
             fireballRotate = 0;
         }
         else {
-            setRotation(bossRotate);
             world.addObject(new Fireball(fireballRotate, 1), X, Y);
             fireballRotate += 10;
-            bossRotate += 2;
             tick++;
         }
     }
@@ -89,9 +94,10 @@ public class Boss extends Actor
     
     
     public void pattern3(BossFight world) {
-        if ( fireballPositionCount < 6 ) {//generate random positions where the fireballs will come out
-            fireballPosition[fireballPositionCount] 
-            = Greenfoot.getRandomNumber(world.getHeight());//y-coordinate
+        if ( fireballPositionCount < fireballPosition.length ) {//generate random positions where the fireballs will come out
+            int min = BossBar.BossBarHeight;  
+            int max = 719;
+            fireballPosition[fireballPositionCount] = (int)(Math.random()*(max-min+1)+min);
             fireballPositionCount++;
         }
         else { //generate fireballs(sized a little bit bigger)
@@ -99,12 +105,16 @@ public class Boss extends Actor
                 pattern = -1;
                 tick = 0;
                 fireballPositionCount = 0;
+                previousTick = 0;
             }
             else {
-                tick++;
-                for (int i = 0; i < fireballPosition.length; i++ ) {
-                    world.addObject(new Fireball(0, 2), 1, fireballPosition[i]);
+                if (previousTick + tickDelay == tick) {
+                    for (int i = 0; i < fireballPosition.length; i++ ) {
+                        world.addObject(new Fireball(0, 3), 1, fireballPosition[i]);
+                    }
+                    previousTick = tick;
                 }
+                tick++;
             } 
         }
     } 

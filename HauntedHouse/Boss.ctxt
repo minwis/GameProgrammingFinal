@@ -4,6 +4,7 @@ comment1.params=
 comment1.target=void\ act()
 comment2.params=world\ X\ Y
 comment2.target=void\ pattern1(BossFight,\ int,\ int)
+comment2.text=\n\ rotate\ the\ center\ of\ rotation.\n
 comment3.params=world
 comment3.target=void\ pattern2(BossFight)
 comment4.params=world

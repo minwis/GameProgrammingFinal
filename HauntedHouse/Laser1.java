@@ -30,6 +30,11 @@ public class Laser1 extends Actor
             setLocation(getX() - shootingSpeed, getY());
         }
         
+        if (isTouching( Brick.class )) {
+            getWorld().removeObject(this);
+            return;
+        }
+        
         if (isTouching(VerticalGhost.class)) {
             removeTouching(VerticalGhost.class);
         }

@@ -51,8 +51,12 @@ public class Maze extends World
         
         if (print_story) {
             System.out.print("You are the ghost hunter..." + "\n" + 
-            "But you are stuck in the haunted house!" + "\n" + "Escape the maze" + "\n"
-            + "And fight against the ghost boss!"+ "\n" + "Now, press the 'Run' button to start!");
+            "But you are stuck in the haunted house!" + "\n" + "Escape the maze(reach the open space in down left corner)" + "\n"
+            + "And fight against the ghost boss!"+ "\n" + "Now, press the 'Run' button to start!" + "\n" + 
+            "Red Circle(Amulet): Allows you to fire a laser to kill the ghost" + "\n" + 
+            "Grey Circle(Amulet): Allows you to ignore the ghosts/protect you from losing lives from the ghost" + "\n" + 
+            "Blue Circle(Amulet): Allows you to break through the walls" + "\n" + 
+            "+ Avoid the ghosts!" + "\n");
             print_story = false;
         }
     }
@@ -77,7 +81,7 @@ public class Maze extends World
     public void makeNewWorld() {
         Timer timer = new Timer();
         TimerTask task = new wait();
-        timer.schedule(task, 300);
+        timer.schedule(task, 600);
         return;
     }
     

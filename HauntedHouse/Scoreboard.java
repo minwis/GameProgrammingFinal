@@ -1,4 +1,4 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;
 
 public class Scoreboard extends Actor
 {
@@ -9,6 +9,8 @@ public class Scoreboard extends Actor
     int height = 60;
     GreenfootImage boardImage;
     public int lives = 5;
+    public static GreenfootSound lost = new GreenfootSound("LosingSound(Mario).mp3");
+    public static GreenfootSound hurt = new GreenfootSound("HurtSound2.mp3");
     public void addedToWorld(World w) {
         try {
             myWorld1 = (Maze) w;
@@ -29,6 +31,7 @@ public class Scoreboard extends Actor
         addedToWorld(getWorld());
         drawLives();
         if ( lives == 0 ) {
+            lost.play();
             if (Player.stage1 == true) {
                 Maze world = (Maze)getWorld();
                 world.getScoreboard().drawLives();
@@ -54,6 +57,7 @@ public class Scoreboard extends Actor
     }
     
     public void decreaseLive() {
+        hurt.play();
         lives--;
     }
     

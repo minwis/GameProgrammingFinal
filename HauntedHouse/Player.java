@@ -22,6 +22,10 @@ public class Player extends Actor
     public static int playerX;
     public static int playerY;
     
+    public static GreenfootSound movingNextStage = new GreenfootSound("going-to-the-next-level-114480.mp3");
+    public static GreenfootSound win = new GreenfootSound("WinnnigSound(Super Mario).com.mp3");
+    public static GreenfootSound laser = new GreenfootSound("LaserSound.wav");
+    public static GreenfootSound hurt = new GreenfootSound("HurtSound2.mp3");
     public void act()
     {
     
@@ -49,25 +53,27 @@ public class Player extends Actor
         }
         
         if (stage1) {
-           Maze world = (Maze) getWorld();
+            Maze world = (Maze) getWorld();
             
-           if (Greenfoot.isKeyDown("x") && killGhost) {
+            if (Greenfoot.isKeyDown("x") && killGhost) {
+                laser.play();
                 killingGhost();
                 shootingCounter = 100;
-           }
+            }
         
-           if (isTouching(Exit.class)) {
-                   removeTouching(Exit.class);
-                   stage1=  false;
-                   protection = false;
-                   killGhost = false;
-                   bulldozer = false;
-                   world.print("Moving to the next stage...");
-                   world.getScoreboard().lives = 10;
-                   world.makeNewWorld();
-                   Greenfoot.stop();
-                   return;
-               }
+            if (isTouching(Exit.class)) {
+                movingNextStage.play();
+                removeTouching(Exit.class);
+                stage1=  false;
+                protection = false;
+                killGhost = false;
+                bulldozer = false;
+                world.print("Moving to the next stage...");
+                world.getScoreboard().lives = 10;
+                world.makeNewWorld();
+                Greenfoot.stop();
+                return;
+            }
                
             if (isTouching(HealingPotion.class)) {
                 world.getScoreboard().increaseLive();
@@ -102,12 +108,14 @@ public class Player extends Actor
         }
         else {
             BossFight world = (BossFight) getWorld();
-            if (isTouching(Fireball.class)) {
-                 if (!protection) {
-                     world.getScoreboard().decreaseLive();
-                 }
-                 removeTouching(Fireball.class);
-                 protect(2500);
+            if (isTouching(Fireball.class)) {// the command "isTouching" is applied in too much area.
+                if (!protection) {
+                    hurt.play();
+                    world.getScoreboard().decreaseLive();
+                    removeTouching(Fireball.class);
+                }
+                
+                protect(2500);
             }
             
             MouseInfo mi = Greenfoot.getMouseInfo();
@@ -115,7 +123,8 @@ public class Player extends Actor
                 turnTowards(mi.getX(), mi.getY());
             }
             
-            if (Greenfoot.isKeyDown("f") && shootingCounter <= 0) {
+            if (Greenfoot.isKeyDown("x") && shootingCounter <= 0) {
+                laser.play();
                 Laser laser = new Laser();
                 laser.setRotation(getRotation());
                 world.addObject(laser, getX(), getY());
@@ -123,6 +132,7 @@ public class Player extends Actor
             }
             
             if ( world.getObjects(Boss.class).size() < 1 ) {
+                win.play();
                 world.print("YOU WON!");
                 Greenfoot.stop();
                 return;
@@ -133,6 +143,9 @@ public class Player extends Actor
                 removeTouching(Minion.class);
             }
             
+            if ( protection ) {
+                protect(2500);
+            }
         }
         
         shootingCounter--;
